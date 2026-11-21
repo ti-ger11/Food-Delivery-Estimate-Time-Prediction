@@ -43,7 +43,7 @@ def add_time_features(df):
     picked = _to_minutes(df["Time_Order_picked"])
 
     df["order_hour"] = ordered // 60
-    df["order_weekday"] = df["Order_Date"].dt.dayofweek  # 0 = Monday
+    df["order_weekday"] = df["Order_Date"].dt.day_of_week  # 0 = Monday
     # % 1440 handles orders that cross midnight (23:55 -> 00:05 = 10 min)
     df["prep_time_min"] = (picked - ordered) % 1440
     return df

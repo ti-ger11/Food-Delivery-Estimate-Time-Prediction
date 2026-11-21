@@ -53,8 +53,10 @@ def fix_text_columns(df):
     df["Weatherconditions"] = df["Weatherconditions"].replace("NaN", np.nan)
 
     # 4. Target: "(min) 24" -> 24, and give it a clean name
-    df["Time_taken_min"] = df["Time_taken(min)"].str.replace("(min)", "", regex=False).str.strip().astype(int)
-    df = df.drop(columns=["Time_taken(min)"])
+    #    (test.csv and app inputs have no target, so only do this if it exists)
+    if "Time_taken(min)" in df.columns:
+        df["Time_taken_min"] = df["Time_taken(min)"].str.replace("(min)", "", regex=False).str.strip().astype(int)
+        df = df.drop(columns=["Time_taken(min)"])
 
     # 5. Text numbers -> real numbers
     for col in NUMERIC_COLUMNS:
@@ -63,7 +65,6 @@ def fix_text_columns(df):
     # 6. Date text -> datetime (format in file is day-month-year)
     df["Order_Date"] = pd.to_datetime(df["Order_Date"], format="%d-%m-%Y")
 
-    print("Text columns fixed")
     return df
 
 
