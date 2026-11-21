@@ -11,7 +11,8 @@ from src.model_prep import prepare_data
 from src.evaluate import regression_metrics, cross_validate, save_results
 from src.train_ml import train_linear, train_random_forest, train_xgboost
 from src.train_ann import tune_ann
-from src.plots import actual_vs_predicted, residual_plot, feature_importance, ann_loss_curve
+from src.plots import (actual_vs_predicted, residual_plot, feature_importance, ann_loss_curve,
+                       model_comparison, all_models_actual_vs_predicted)
 
 
 def main():
@@ -70,6 +71,10 @@ def main():
     residual_plot(y_test, predictions[best_name], best_name)
     tree_name = best_name if best_name in ("RandomForest", "XGBoost") else "XGBoost"
     feature_importance(models[tree_name], feature_names, tree_name)
+
+    # Step 6: Compare all models in charts
+    model_comparison(table)
+    all_models_actual_vs_predicted(y_test, predictions)
 
     print("\nPhase 2 complete")
 

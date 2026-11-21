@@ -1,0 +1,34 @@
+[
+  {
+    "model": "XGBoost",
+    "rmse": 3.696,
+    "mae": 2.994,
+    "r2": 0.8447,
+    "cv_rmse_mean": 3.758,
+    "cv_rmse_std": 0.034
+  },
+  {
+    "model": "RandomForest",
+    "rmse": 3.758,
+    "mae": 3.038,
+    "r2": 0.8395,
+    "cv_rmse_mean": 3.82,
+    "cv_rmse_std": 0.032
+  },
+  {
+    "model": "ANN",
+    "rmse": 3.823,
+    "mae": 3.097,
+    "r2": 0.8339,
+    "cv_rmse_mean": NaN,
+    "cv_rmse_std": NaN
+  },
+  {
+    "model": "LinearRegression",
+    "rmse": 5.937,
+    "mae": 4.729,
+    "r2": 0.5994,
+    "cv_rmse_mean": 5.953,
+    "cv_rmse_std": 0.035
+  }
+]

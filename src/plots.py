@@ -57,3 +57,41 @@ def ann_loss_curve(history, out_dir="images"):
     plt.legend()
     plt.savefig(f"{out_dir}/ann_loss_curve.png", bbox_inches="tight")
     plt.close()
+
+
+def model_comparison(table, out_dir="images"):
+    """Side-by-side bars of RMSE, MAE (lower is better) and R2 (higher is better)."""
+    os.makedirs(out_dir, exist_ok=True)
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+    metrics = [("rmse", "RMSE (min) - lower is better"),
+               ("mae", "MAE (min) - lower is better"),
+               ("r2", "R² - higher is better")]
+    best = table.iloc[0]["model"]
+    for ax, (col, title) in zip(axes, metrics):
+        colors = ["tab:orange" if m == best else "tab:blue" for m in table["model"]]
+        bars = ax.bar(table["model"], table[col], color=colors)
+        ax.bar_label(bars, fmt="%.3f")
+        ax.set_title(title)
+        ax.tick_params(axis="x", rotation=20)
+    fig.suptitle(f"Model comparison on the 20% test set (best: {best})")
+    plt.tight_layout()
+    plt.savefig(f"{out_dir}/model_comparison.png", bbox_inches="tight")
+    plt.close()
+    print(f"Model comparison chart saved to {out_dir}/model_comparison.png")
+
+
+def all_models_actual_vs_predicted(y_true, predictions, out_dir="images"):
+    """One small scatter per model so the models can be compared visually."""
+    n = len(predictions)
+    fig, axes = plt.subplots(1, n, figsize=(5 * n, 5), sharex=True, sharey=True)
+    lims = [y_true.min(), y_true.max()]
+    for ax, (name, y_pred) in zip(axes, predictions.items()):
+        ax.scatter(y_true, y_pred, alpha=0.2, s=6)
+        ax.plot(lims, lims, "r--")
+        ax.set_title(name)
+        ax.set_xlabel("Actual (min)")
+    axes[0].set_ylabel("Predicted (min)")
+    fig.suptitle("Actual vs Predicted - all models")
+    plt.tight_layout()
+    plt.savefig(f"{out_dir}/all_models_actual_vs_predicted.png", bbox_inches="tight")
+    plt.close()

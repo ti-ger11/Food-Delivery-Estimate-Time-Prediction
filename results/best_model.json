@@ -1,0 +1,4 @@
+{
+  "best_model": "XGBoost",
+  "path": "models/best_model.pkl"
+}
