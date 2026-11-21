@@ -1,6 +1,6 @@
 """
 Phase 1: raw data -> cleaned_data.csv -> featured_data.csv
-Run from the project root:  python run_phase1.py
+Run alone:  python run_phase1.py      (or through main.py)
 """
 import os
 
@@ -9,31 +9,37 @@ from src.preprocessing import remove_outliers, handle_missing
 from src.feature_engineering import add_distance, add_time_features, select_features
 from src.eda import make_plots
 
-RAW_PATH = "data/raw/train.csv"
+RAW_PATH = "data/raw/dataset.csv"
 CLEANED_PATH = "data/processed/cleaned_data.csv"
 FEATURED_PATH = "data/processed/featured_data.csv"
 
-os.makedirs("data/processed", exist_ok=True)
 
-# Step 1: Load (Chandrakant Suman)
-df = load_data(RAW_PATH)
-validate_schema(df)
-df = fix_text_columns(df)
+def main():
+    os.makedirs("data/processed", exist_ok=True)
 
-# Step 2: Preprocess (Om Singh Bisen)
-df = remove_outliers(df)
-df = handle_missing(df)
-df.to_csv(CLEANED_PATH, index=False)
-print(f"Saved {CLEANED_PATH}  shape={df.shape}")
+    # Step 1: Load (Member 1)
+    df = load_data(RAW_PATH)
+    validate_schema(df)
+    df = fix_text_columns(df)
 
-# Step 3: Feature engineering (Rshishabh Yadav)
-df = add_distance(df)
-df = add_time_features(df)
-df = select_features(df)
-df.to_csv(FEATURED_PATH, index=False)
-print(f"Saved {FEATURED_PATH}  shape={df.shape}")
+    # Step 2: Preprocess (Member 2)
+    df = remove_outliers(df)
+    df = handle_missing(df)
+    df.to_csv(CLEANED_PATH, index=False)
+    print(f"Saved {CLEANED_PATH}  shape={df.shape}")
 
-# Step 4: Charts (Chandrakant Suman)
-make_plots(df)
+    # Step 3: Feature engineering (Member 3)
+    df = add_distance(df)
+    df = add_time_features(df)
+    df = select_features(df)
+    df.to_csv(FEATURED_PATH, index=False)
+    print(f"Saved {FEATURED_PATH}  shape={df.shape}")
 
-print("Phase 1 complete")
+    # Step 4: Charts (Member 1)
+    make_plots(df)
+
+    print("Phase 1 complete")
+
+
+if __name__ == "__main__":
+    main()

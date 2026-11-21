@@ -68,7 +68,7 @@ def fix_text_columns(df):
 
 
 if __name__ == "__main__":
-    data = load_data("data/raw/train.csv")
+    data = load_data("data/raw/dataset.csv")
     validate_schema(data)
     data = fix_text_columns(data)
     print(data.dtypes)

@@ -53,7 +53,7 @@ def handle_missing(df):
 if __name__ == "__main__":
     from src.data_loader import load_data, fix_text_columns
 
-    data = fix_text_columns(load_data("data/raw/train.csv"))
+    data = fix_text_columns(load_data("data/raw/dataset.csv"))
     data = remove_outliers(data)
     data = handle_missing(data)
     print(data.shape)
